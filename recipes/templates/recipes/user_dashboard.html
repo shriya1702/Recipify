@@ -1,0 +1,34 @@
+{% extends 'recipes/base.html' %} {% block content %} {% load static %}
+
+<center><h1 >Welcome <span style="color:blue">'{{username}}'</span></h1><center>
+
+  <div class="container" id="main-content">
+    <div class="row mt-5">
+      <div class="col-6">
+        <a href= "{% url 'upload'%}">
+        <div class="card">
+          <div class="card-title">
+            Upload  Recipe
+          </div>
+        </div>
+      </a>
+      </div>
+      <div class="col-6">
+        <a href= "{% url 'viewuploaded'%}">
+        <div class="card">
+          <div class="card-title">
+            View Uploaded
+          </div>
+
+        </div>
+      </a>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+{%endblock content%}

@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% if title %}
+    <title>Django Recipes - {{title}}</title>
+    {% else %}
+    <title>Django Recipes</title>
+    {% endif %}
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+
+  </head>
+  <body style="background-color:#FDFAEC">
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FDFAEC; border-bottom: 1px solid #0d3b66;">
+        <div class="container">
+          <!-- Brand/logo -->
+          <a class="navbar-brand" href="{% url 'home' %}" style="color: #0d3b66; font-weight: bold;">Recipify</a>
+    
+          <!-- Toggler button -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <!-- Navbar links -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}" style="color: #0d3b66;font-weight: bold">Home</a>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link recipe-link" href="#" style="color: #0d3b66;font-weight: bold">Recipes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}"style="color: #0d3b66;font-weight: bold">About</a>
+              </li>
+            </ul>
+            
+            <!-- Search Bar -->
+            
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              {% comment %} <button class="btn btn-outline-dark" type="submit">Search</button> {% endcomment %}
+            </form>
+    
+            <!-- Login Button -->
+            <a class="btn btn-outline-dark mx-2" href="{% url 'login' %}">Login</a>
+          </div>
+        </div>
+      </nav>
+    
+     
+      <!-- Your other content goes here -->
+    
+    
+  {% block content %} {% endblock %}
+    </div>
+   
+  <script src= "static/js/scroll.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
+
+    
+  </body>
+</html>

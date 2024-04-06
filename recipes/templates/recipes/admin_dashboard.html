@@ -1,0 +1,52 @@
+<!-- admin_dashboard.html -->
+<!-- admin_dashboard.html -->
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Recipes
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Received Submissions
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Upload content
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Admin Dashboard</h1>
+      </div>
+
+      <!-- Your content goes here -->
+      <!-- For now, let's just add a placeholder -->
+      <div class="row">
+        <div class="col-md-12">
+          <p>This is the main content area. You can display different content based on the selected menu item in the sidebar.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

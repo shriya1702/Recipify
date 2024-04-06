@@ -1,0 +1,77 @@
+{% extends 'recipes/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container" id="main">
+  
+  <div class="row" id="recipe-cards">
+    <!-- Dynamic recipe cards will be added here -->
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+  function showImages() {
+    $.ajax({
+      url: "{% url 'user_data' %}",
+      method: "POST",
+      contentType: "application/json",
+      beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      },
+      data: JSON.stringify({
+        item: "recipe",
+      }),
+      success: function(response) {
+        for (const [key, value] of Object.entries(response)) {
+          for (var i in value) {
+            var card = document.createElement("div");
+            card.className = "col-md-3 mb-4";
+
+            // Create card content
+            var cardContent = document.createElement("div");
+            cardContent.className = "card";
+
+            // Create card image
+            var cardImage = document.createElement("img");
+            var imagePath = "{% static '' %}" + value[i]["image"].replace(/\\/g, '/').replace('/static', '');
+            cardImage.src = imagePath;
+            cardImage.className = "card-img-top";
+            cardImage.alt = value[i]["image"];
+
+            // Create card body
+            var cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+
+            // Create card title
+            var cardTitle = document.createElement("h5");
+            cardTitle.className = "card-title";
+            cardTitle.textContent = value[i]["title"];
+
+            // Append elements to card body and list group
+            cardBody.appendChild(cardTitle);
+
+            // Append image and card body to card content
+            cardContent.appendChild(cardImage);
+            cardContent.appendChild(cardBody);
+
+            // Append card content to card element
+            card.appendChild(cardContent);
+
+            // Append card to recipe-cards container
+            document.getElementById("recipe-cards").appendChild(card);
+          }
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      },
+    });
+  }
+
+  $(document).ready(function() {
+    showImages();
+  });
+</script>
+{% endblock content %}

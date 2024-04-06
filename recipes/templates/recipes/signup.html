@@ -1,0 +1,23 @@
+{% extends 'recipes/base.html' %}
+{% block content %}
+
+<h1>Sign Up</h1>
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  {% comment %} <label for="id_first_name">First Name:</label><br />
+  <input type="text" id="id_first_name" name="first_name" /><br />
+  <label for="id_last_name">Last Name:</label><br />
+  <input type="text" id="id_last_name" name="last_name" /><br />
+  <label for="id_username">Username:</label><br />
+  <input type="text" id="id_username" name="username" /><br />
+  <label for="id_email">Email:</label><br />
+  <input type="email" id="id_email" name="email" /><br />
+  <label for="id_password1">Password:</label><br />
+  <input type="password" id="id_password1" name="password1" /><br />
+  <label for="id_password2">Confirm Password:</label><br />
+  <input type="password" id="id_password2" name="password2" /><br /><br /> {% endcomment %}
+  <button type="submit">Sign Up</button>
+</form>
+<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+{% endblock content %}

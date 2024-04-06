@@ -1,0 +1,79 @@
+{% extends 'recipes/base.html' %} {% block content %}
+<style>
+  /* Centering the form */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh; /* Adjust as needed
+    width:50%;
+    */
+  }
+
+  .form {
+    width: 40%;
+    max-width:400px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    {% comment %} box-shadow:3px 1px 12px #94D2BD; {% endcomment %}
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin-top:-5%;
+  }
+  .form input[type="text"],
+  .form textarea {
+    width: 100%; /* Squared width */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #94D2BD;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  /* Button styling */
+  .form button {
+    background-color: #f95738;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .form button:hover {
+    background-color: #ff7e6d;
+  }
+
+  /* Styling for additional elements */
+  .upload-label {
+    margin-bottom: 10px;
+  }
+  @media screen and (max-width: 800px) {
+    .form {
+      width: 95%;
+    }
+  }
+</style>
+
+<div class="form-container">
+  <form method="post" enctype="multipart/form-data" class="form">
+    {% csrf_token %} {{ form.as_p }}
+
+    <button onClick("send")>SEND FOR APPROVAL</button>
+    <button type="submit">Submit</button>
+    <p>
+       If approved, it will
+      be visible in our main recipe section.
+    </p>
+  </form>
+</div>
+
+<script>
+  function send(){
+    
+
+  }
+</script>
+{% endblock content %}
