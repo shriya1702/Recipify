@@ -33,6 +33,23 @@
             var cardContent = document.createElement("div");
             cardContent.className = "card";
 
+                        // Create anchor tag for linking
+                      // Create anchor tag for linking
+            var cardLink = document.createElement("a");
+            // Set custom data attribute to store card data
+            cardLink.setAttribute("data-card-id", value[i]["id"]); // Example: Assuming "id" is the specific data you want to send
+            // Add click event listener to handle card click
+            cardLink.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                var cardId = this.getAttribute("data-card-id");
+                alert(cardId);
+                // Construct URL based on card data
+                var redirectUrl = "{% url 'full_recipe' %}?id=" + cardId; // Example: Construct URL with card ID
+                window.location.href = redirectUrl; // Redirect to the constructed URL
+            });
+            
+
+
             // Create card image
             var cardImage = document.createElement("img");
             var imagePath = "{% static '' %}" + value[i]["image"].replace(/\\/g, '/').replace('/static', '');
@@ -57,7 +74,8 @@
             cardContent.appendChild(cardBody);
 
             // Append card content to card element
-            card.appendChild(cardContent);
+            cardLink.appendChild(cardContent);
+            card.appendChild(cardLink);
 
             // Append card to recipe-cards container
             document.getElementById("recipe-cards").appendChild(card);
@@ -75,3 +93,17 @@
   });
 </script>
 {% endblock content %}
+
+
+
+
+
+
+
+
+
+{% comment %} sendButton.addEventListener("DOMContentLoaded",function()){
+               const sendButton= document.getElementById('send_for_approval');
+               sendButton.addEventListener("click", function() {
+                 const url= "{% url 'send_for_approval' %}"
+               }); {% endcomment %}

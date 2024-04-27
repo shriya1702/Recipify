@@ -1,0 +1,298 @@
+{% extends 'recipes/nav.html' %} 
+{% include "css/home.css" %}
+{% block content %} 
+{% load static %}
+
+
+<style>
+  
+  /* Custom CSS */
+  .special {
+    position: relative;
+    text-align: center;
+  }
+
+  .special img {
+    width: 100%;
+    height: auto;
+  }
+
+  .centered {
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .centered {
+      font-size: 1.25rem;
+    }
+  }
+ 
+  
+.special__container :is(.section__header, .section__description) {
+  max-width: 600px;
+  margin-inline: auto;
+  
+}
+
+.special img {
+  width: 100%;
+  height: auto;
+  max-width: 400px; /* Adjust as needed */
+  margin-bottom: 20px;
+}
+
+.special__grid {
+  display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.special__card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  padding: 20px;
+  text-align: center;
+  border: solid orange 1px;
+}
+
+.special__card:hover {
+  box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.special__card img:hover{
+}
+
+.special__card img {
+  height:40%;
+  border-radius:10%;
+  max-width: 300px;
+  margin-inline: auto;
+  margin-bottom: 1rem;
+  filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+.special__card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.special__card p {
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+  line-height: 1.75rem;
+}
+
+.special__ratings {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: goldenrod;
+}
+
+.special__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.special__footer .price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.flex-container > div {
+  border: solid orange 1px;
+  color: orange;
+  width: 100%;
+  margin: 0px 0px 0px 10px;
+  text-align: center;
+  border-radius:6px;
+  padding: 6px 12px;
+
+}
+
+
+
+
+</style>
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+
+<div class="container">
+  <div class="content-row mt-5"  id="home">
+    <div class="col-lg-6">
+      <img src="{% static 'images/fruitbowl.png' %}" alt="food" />
+    </div>
+    <div class="col-lg-6">
+      <div id="content">
+        <div class="header_Section">
+          <p id="main">
+            Every Recipe has a <span style="color: orange">story</span>....
+            What's <span style="color: orange">yours</span>?
+          </p>
+        </div>
+        <div class="section_desc">
+          <p id='sub'>Share your favorite recipes and discover new ones on Recipify.</p>
+        </div>
+        <div class="btnn">
+          <button class="btn">Get Started</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section__container special__container mt-2" id="special">
+  
+  <center><h2 class="section__header"><b>Top Rated Dishes </b></h2>
+  <p class="section__description">
+    Each dish promises an unforgettable dining experience, blending
+    innovation with tradition to delight your senses.
+  </p>
+ </center>
+
+  <div class="special__grid">
+    <div class="special__card">
+      <img src="{% static 'images/fruitbowl.png' %}" alt="food" />
+      <h4>Chicken Veg Curry</h4>
+      <p>
+        Diced chicken simmered in aromatic curry sauce with mixed veggies
+        like potatoes, cauliflower, and beans for a hearty, flavorful dish.
+      </p>
+      <div class="special__ratings">
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+      </div>
+      <div class="flex-container">
+        <div>pasta</div>
+        <div>sauce</div>
+        <div>veggies</div>  
+      </div>
+      <div class="special__footer">
+         <button class="btn">Save</button>
+         
+      </div>
+    </div>
+    <div class="special__card">
+      <img src="{% static 'images/oats.jpg' %}" alt="food" />
+      <h4>Chicken Veg Stir-Fry</h4>
+      <p>
+        Tender chicken strips wok-tossed with a colorful array of fresh
+        vegetables in a flavorful blend of spices and sauces.
+      </p>
+      <div class="special__ratings">
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+      </div>
+      <div class="flex-container">
+        <div>pasta</div>
+        <div>sauce</div>
+        <div>veggies</div>  
+      </div>
+      <div class="special__footer">
+        <button class="btn">Save</button>
+      </div>
+    </div>
+    <div class="special__card">
+      <img src="{% static 'images/oats.jpg' %}" alt="food" />
+      <h4>Chicken Veg Pasta</h4>
+      <p>
+        Al dente pasta tossed with chicken strips and a mix of vibrant
+        vegetables in a creamy garlic herb sauce, offering a delightful
+   
+      </p>
+      <div class="special__ratings">
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+        <span><i class="ri-star-fill"></i></span>
+      </div>
+      <div class="flex-container">
+        <div>pasta</div>
+        <div>sauce</div>
+        <div>veggies</div>  
+      </div>
+      <div class="special__footer">
+
+      <button class="btn">Save</button>
+      </div>
+    </div>
+  </div> 
+</section>
+
+
+
+<section class="hello mt-4">
+
+  <div id="contact"> 
+
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+
+  <h2> CONTACT USSSSS</h2>  
+
+  <h2> CONTACT USSSSS</h2>  
+
+  <h2> CONTACT USSSSS</h2>  
+
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+  <h2> CONTACT USSSSS</h2>  
+
+  </div>
+
+</section>
+
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+  const scrollRevealOption={
+    distance:"50px",
+  }
+  ScrollReveal().reveal(".col-lg-6 img" , {...scrollRevealOption, origin: "right",});
+  ScrollReveal().reveal(".header_Section", {...scrollRevealOption, delay :500, origin:"left" });
+  ScrollReveal().reveal(".section_desc", {...scrollRevealOption, delay :1000, origin:"right" });
+  ScrollReveal().reveal(".btn", { delay: 1000 });
+</script>
+
+{% endblock content %}

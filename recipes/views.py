@@ -1,8 +1,8 @@
-import os
+import os,json
 from django.conf import settings
 from django.shortcuts import render,redirect, HttpResponse, HttpResponseRedirect
 from . import models
-from .models import Recipe
+from .models import Recipe, adminn
 from django.contrib.auth.decorators import login_required ,user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from .forms import userform, userRegister
@@ -14,6 +14,7 @@ from django.shortcuts import render, redirect
 from .forms import RecipeForm
 
 
+
 # Create your views here.
 @login_required
 def user_dashboard(request):
@@ -23,12 +24,56 @@ def user_dashboard(request):
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 
+
 def admin_dashboard(request):
-  submissions= Recipe.objects.filter(approved=False)
+  submissions= Recipe.objects.filter(status=False)
   return render(request,'recipes/admin_dashboard.html', {'submissions': submissions})
+
+
+def submissions(request): #admin's submission page
+  
+  submission_data= submission_table()
+  print(submission_data)
+  return render(request,'recipes/submissions.html',{'submissions_data': submission_data})
+
+  
+def all_recipe(request):
+   
+   return render(request, 'recipes/all_recipes.html')
+
+def show_all_recipe(request):
+  
+   recipe = Recipe.objects.values('id','title', 'description', 'image') 
+       
+   return JsonResponse({'recipe':list(recipe)})
+
+   
+
+
+def submission_table():
+  
+    admin_submissions = adminn.objects.all()
+    ds = []
+    for submission in admin_submissions:
+        # Get associated Recipe object
+        recipe = submission.Recipe_id
+
+        # Get additional details
+        recipe_data = {
+            'id': recipe.id,
+            'title': recipe.title,
+            'author': recipe.author.username,
+            'status': submission.status
+            # Add any other fields you want to include
+        }
+        ds.append(recipe_data)
+
+    return ds
+
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
+
 def approve_recipe(request, recipe_id):
   recipe= Recipe.objects.get(pk=recipe_id)
   recipe.approved= True
@@ -37,16 +82,22 @@ def approve_recipe(request, recipe_id):
   
 
 def home(request):
-  recipes= models.Recipe.objects.all()
-  print(recipes)
-  context= {
-    'recipes' : recipes
-  }
-  return render(request,'recipes/home.html',context) 
+  recipe = Recipe.objects.values('id','title', 'description', 'image')  
+  print(recipe)
+   
+  return render(request,'recipes/homee.html', {'user':request.user}) 
+
+
 def about(request):
-  return render(request,'recipes/home')
+  return render(request,'recipes/homee.html')
 
 
+def full_recipe(request):
+  return render(request, "recipes/full_recipe.html")
+      
+    
+def viewuploaded(request):
+  return render(request, 'recipes/viewuploaded.html')
 
 # def login(request):
 #   return render(request,'recipes/login.html')
@@ -97,26 +148,33 @@ def signup(request):
     return render(request, 'recipes/signup.html', {'form': form})
   
   
-def viewuploaded(request):
-  
-  return render(request, 'recipes/viewuploaded.html')
 
-
+#userdashboard mai view data par saari uski recipes 
 def user_data(request):
   author_id = request.user.id  # Assuming the logged-in user is the author
   user=User.objects.filter(id=author_id).values('username')
-  
-  recipe = Recipe.objects.filter(author_id=author_id).values('title', 'description',  'image', 'approved')
-  print("hello",recipe)
+  print(user)
+  recipe = Recipe.objects.filter(author_id=author_id).values('id','title', 'description', 'image')
   
   return JsonResponse({'recipe':list(recipe)})
+
+
+
   
+def recipe_content(request):
+    # Assuming the logged-in user is the author
+    
+    
+    print("hello inside")
+    id=json.loads(request.body)['item']
+    print(id)
+    recipe= Recipe.objects.filter(id=id).values()
+    print(recipe)
+    
+    return JsonResponse({'recipe':list(recipe)})
+    
   
-  
-from django.conf import settings
-import os
-from django.conf import settings
-import os
+
 
 def upload(request):
     print("inside upload")
@@ -124,7 +182,8 @@ def upload(request):
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             user = request.user
-            # Define the base directory for user uploads
+    
+              # Define the base directory for user uploads
             base_dir = os.path.join(settings.BASE_DIR, 'static', 'user_uploads')
 
             # Create a directory for the user if it doesn't exist
@@ -159,128 +218,41 @@ def upload(request):
     return render(request, 'recipes/upload.html', {'form': form})
 
 
-# def send_for_approval(request):
-#     #this recipe author
-    
-#     if request.method == 'POST':
-#        author_id=request.user.id
-#        user=Recipe.objects.filter(author_id=author_id  ).values('id')
+from django.http import JsonResponse
+
+def send_for_approval(request):
+    if request.method == 'POST':
+        print("im in")
+        # Get the recipe ID from the request data
+        recipe_id = request.POST.get('id')
+        print(recipe_id)
+        
+        # Retrieve the current user
+        user = request.user
+        
+        # Create an entry in the adminn table with the recipe ID and status
+        
+        recipe = Recipe.objects.get(pk=recipe_id)
+        recipe.status = 'SentForApproval'
+        recipe.save()
+
+        
+        
+        admin_entry = adminn.objects.create(
+            Recipe_id=Recipe.objects.get(pk=recipe_id),
+            status='SentForApproval'
+        )
        
-       
-      
-
-#   return render()
-  
-
-
-
-
-
-
-# # def upload(request):
-# #     print("inside upload")
-# #     if request.method == 'POST':
-# #         form = RecipeForm(request.POST, request.FILES)
-# #         if form.is_valid():
-# #             user = request.user
-# #             path = "./static/user_uploads/"
-# #             user_dir = os.path.join(path, str(user.username))
-# #             if not os.path.exists(user_dir):
-# #                 os.makedirs(user_dir)
-
-# #             # Get the uploaded image from the form
-# #             uploaded_image = form.cleaned_data['image']
-            
-# #             # Save the uploaded image to the user's directory
-# #             with open(os.path.join(user_dir, uploaded_image.name), 'wb') as file:
-# #                 for chunk in uploaded_image.chunks():
-# #                     file.write(chunk)
-
-# #             # Save the form data to the database
-# #             recipe_instance = form.save(commit=False)
-# #             recipe_instance.author = user
-# #             recipe_instance.save()
-
-# #             return redirect('user_dashboard')  # Redirect to a success page
-# #     else:
-# #         form = RecipeForm()
-# #     return render(request, 'recipes/upload.html', {'form': form})
+        #check ki id already exist karti hai ki nahi
+        # Return a success response
+        return JsonResponse({'message': 'Recipe sent for approval successfully.'})
+    else:
+        # Return an error response if the request method is not POST
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
 
 
-
-
-
-
-
-# def handle_uploaded_file(user, uploaded_file):
-#     # Define the path where you want to save the file
-#     path = f"./static/user_uploads/{user.username}/"
-#     if not os.path.exists(path):
-#         os.makedirs(path)
-    
-#     # Write the file to the specified path
-#     with open(os.path.join(path, uploaded_file.name), 'wb+') as destination:
-#         for chunk in uploaded_file.chunks():
-#             destination.write(chunk)
-
-# # Example usage in a view function
-# def upload(request):
-#     if request.method == 'POST':
-#         form = RecipeForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             # Set the author of the recipe
-#             form.instance.author = request.user 
-            
-#             # Save the form data, including the uploaded file
-#             recipe = form.save(commit=False)
-#             recipe.save()
-
-#             # Call the function to handle the uploaded file
-#             handle_uploaded_file(request.user, request.FILES['file'])
-
-#             return redirect('user_dashboard')  # Redirect to a success page
-#     else:
-#         form = RecipeForm()
-#     return render(request, 'recipes/upload.html', {'form': form})
-
-
-
-
-# def upload(request):
-
-#     print("inside upload")
-#     if request.method == 'POST':
-#         print(request.FILES['file'])
-#         user= request.user
-#         path="./static/user_uploads/"
-#         user_dir= os.path.join(path,str(user.username))
-#         # print(user_dir)
-#         if not os.path.exists(user_dir):
-#           os.mkdir(user_dir)
-#         uploaded_file = request.FILES["file"]
-#         print(uploaded_file)
-#               # namee=request.FILES.read()
-#               # with open(os.path.join(user_dir,namee.name),'wb') as file:
-#               #     print(os.path.join(user_dir,namee.name))
-#               #     file.write(namee)
-              
-        
-        
-#         form = RecipeForm(request.POST, request.FILES)
-#         # print(request.FILES)
-        
-#         if form.is_valid():
-#             # print("isnide fork")
-          
-#             form.instance.author = request.user 
-            
-#             form.save()
-#             return redirect('user_dashboard')  # Redirect to a success page
-#     else:
-#         form = RecipeForm()
-#     return render(request, 'recipes/upload.html', {'form': form})
 
 
 

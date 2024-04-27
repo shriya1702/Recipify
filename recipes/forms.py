@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Recipe
+from taggit.forms import TagField
+
+from .models import Recipe, Ingredient
 
 
 class userform(forms.ModelForm):
@@ -29,6 +31,7 @@ class userRegister(forms.ModelForm):
     
 
 class RecipeForm(forms.ModelForm):
+    tags = TagField(required=False)
     class Meta:
         model = Recipe
-        fields = ['title', 'description', 'image'] 
+        fields = ['title', 'description', 'image', 'servings', 'time', 'ingredients'] 

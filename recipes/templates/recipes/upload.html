@@ -18,7 +18,7 @@
     padding: 10px 20px;
     {% comment %} box-shadow:3px 1px 12px #94D2BD; {% endcomment %}
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    margin-top:-5%;
+    margin-top:-10%;
   }
   .form input[type="text"],
   .form textarea {
@@ -61,19 +61,11 @@
   <form method="post" enctype="multipart/form-data" class="form">
     {% csrf_token %} {{ form.as_p }}
 
-    <button onClick("send")>SEND FOR APPROVAL</button>
+   
     <button type="submit">Submit</button>
-    <p>
-       If approved, it will
-      be visible in our main recipe section.
-    </p>
+   
   </form>
 </div>
 
-<script>
-  function send(){
-    
 
-  }
-</script>
 {% endblock content %}

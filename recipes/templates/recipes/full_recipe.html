@@ -1,0 +1,161 @@
+{% extends 'recipes/base.html' %} {% load static %} {% block content %}
+<style>
+  .image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* 4:3 aspect ratio (300:400) */
+  }
+  .image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 3%;
+  }
+  button {
+    background-color: #f95738;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin: 1%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .title-container {
+    text-align: center;
+    margin-top: 10vh; /* Adjust as needed */
+    margin-bottom: 1vh;
+  }
+  .recipe-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 5vw; /* Adjust font size as needed */
+  }
+  .tagline {
+    font-size: 2rem;
+    color: #666;
+    margin-top: 2rem; /* Adjust spacing as needed */
+  }
+  .container {
+    margin-bottom: 1vh; /* Adjust margin-bottom for space at the bottom */
+  }
+</style>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="image-container">
+        <img
+          id="recipe-photo"
+          class="rounded-xl"
+          alt="Recipe Photo"
+          draggable="false"
+          loading="eager"
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="title-container">
+        <p class="tagline">Discover the flavours of...</p>
+        <!-- Move tagline here -->
+        <h1 id="recipe-title" class="recipe-title"></h1>
+        <!-- Move recipe title here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Author and Created Time -->
+  <div class="row">
+    <div class="col-md-8">
+      <p id="recipe-info"></p>
+    </div>
+    <div class="col-md-4">
+      <button id="send_for_approval">Send For Approval</button>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="row mt-2">
+    <div class="col-md-8">
+      <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold">
+        Description:
+      </h1>
+    </div>
+    <div class="col-md-4">
+      <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold">
+        Ingredients:
+      </h1>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Get the recipe ID from the URL query parameter
+    const searchParams = new URLSearchParams(window.location.search);
+    const recipeId = searchParams.get("id");
+
+    $.ajax({
+      url: "{% url 'recipe_content' %}",
+      method: "POST",
+      contentType: "application/json",
+      beforeSend: function (xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      },
+      data: JSON.stringify({
+        item: recipeId,
+      }),
+      success: function (response) {
+        for (const [key, value] of Object.entries(response)) {
+          for (var i = 0; i < value.length; i++) {
+            const recipe = value[i];
+            // Construct image path
+            var imagePath =
+              "{% static '' %}" +
+              recipe.image.replace(/\\/g, "/").replace("/static", "");
+            // Update HTML elements with recipe content
+            $("#recipe-title").text(recipe.title);
+            $("#recipe-info").text(
+              "By " + recipe.author + " on " + recipe.created_at
+            );
+            $("#recipe-description").text(recipe.description);
+            $("#recipe-photo").attr("src", imagePath);
+          }
+        }
+      },
+    });
+
+    const sendButton = document.getElementById("send_for_approval");
+    console.log("yeh wantt");
+    sendButton.addEventListener("click", function () {
+      const ajaxUrl = "{% url 'send_for_approval' %}";
+      // Send AJAX request
+      $.ajax({
+        url: ajaxUrl,
+        method: "POST",
+        beforeSend: function (xhr, settings) {
+          xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+        },
+        data: {
+          id: recipeId,
+        },
+        success: function (response) {
+          console.log(response);
+          // Handle success response
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+          // Handle error response
+        },
+      });
+    });
+  });
+</script>
+{% endblock content %}

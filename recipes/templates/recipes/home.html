@@ -144,8 +144,19 @@
     overflow: hidden;
     max-height: 10vh;
   }
+  #home {
+    height: 100vh; /* Set the height to cover the entire viewport */
+    background-size: cover; /* Make the background image cover the entire section */
+    background-position: center; /* Center the background image */
+    overflow: hidden; /* Hide overflow to prevent scrolling */
+  }
+
+  #cards-section {
+    padding-top: 2rem; /* Add padding to the top to separate from the image */
+  }
 </style>
 <div class="main" style="background-color: #fdfaec">
+  {% comment %}
   <div class="carousal mt-4">
     <div
       id="carouselExampleIndicators"
@@ -172,8 +183,16 @@
       </div>
     </div>
   </div>
+  {% endcomment %}
+  <section
+    id="home"
+    style="background-image: url('{% static 'images/ingridients.jpg' %}')"
+  >
+    <!-- No content here, the background image covers the entire screen -->
+  </section>
 
-  <div class="container mt-4 mb-2 ">
+  {% comment %}
+  <div class="container mt-4 mb-2">
     <div class="row justify-content-center">
       <div class="col-md-3"></div>
       <div class="col-md-3">
@@ -190,79 +209,81 @@
     </div>
   </div>
   <br />
-
-  <div class="container mt-2">
-    <div class="row justify-content-center">
-      <div class="col-md-12 text-center">
-        <div class="banner">
-          <h2 style="color: #0d3b66">
-            Explore endless flavors and culinary delights
-          </h2>
-          <p style="color: #f95738">
-            Welcome to the world of delicious possibilities!
-          </p>
+  {% endcomment %}
+  <section id="card-recipes">
+    <div class="container mt-2">
+      <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+          <div class="banner">
+            <h2 style="color: #0d3b66">
+              Explore endless flavors and culinary delights
+            </h2>
+            <p style="color: #f95738">
+              Welcome to the world of delicious possibilities!
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container mt-5" id="middle">
-    <div class="row justify-content-center">
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Pasta</span>
+    <div class="container mt-5" id="middle">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Pasta</span>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Maczaroni</span>
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Maczaroni</span>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Pizza</span>
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Pizza</span>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Cake</span>
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Cake</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container mt-4">
-    <div class="row justify-content-center">
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Pasta</span>
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Pasta</span>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Maczaroni</span>
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Maczaroni</span>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Pizza</span>
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Pizza</span>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card" id="recipe">
-          <div class="image"><span class="text">This is a chair.</span></div>
-          <span class="price">Cake</span>
+        <div class="col-md-3">
+          <div class="card" id="recipe">
+            <div class="image"><span class="text">This is a chair.</span></div>
+            <span class="price">Cake</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="si mt-5">
     <footer
