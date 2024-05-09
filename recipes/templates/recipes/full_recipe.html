@@ -1,4 +1,4 @@
-{% extends 'recipes/base.html' %} {% load static %} {% block content %}
+{% extends 'recipes/nav.html' %} {% load static %} {% block content %}
 <style>
   .image-container {
     position: relative;
@@ -24,21 +24,17 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  .title-container {
+  .title-container . recipe-info {
     text-align: center;
-    margin-top: 10vh; /* Adjust as needed */
+    margin-top: 1vh; /* Adjust as needed */
     margin-bottom: 1vh;
   }
   .recipe-title {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    font-size: 5vw; /* Adjust font size as needed */
+    font-size: 3vw; /* Adjust font size as needed */
   }
-  .tagline {
-    font-size: 2rem;
-    color: #666;
-    margin-top: 2rem; /* Adjust spacing as needed */
-  }
+
   .container {
     margin-bottom: 1vh; /* Adjust margin-bottom for space at the bottom */
   }
@@ -46,7 +42,7 @@
 
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col">
       <div class="image-container">
         <img
           id="recipe-photo"
@@ -59,9 +55,10 @@
     </div>
     <div class="col-md-6">
       <div class="title-container">
-        <p class="tagline">Discover the flavours of...</p>
         <!-- Move tagline here -->
+        <p id="recipe-info"></p>
         <h1 id="recipe-title" class="recipe-title"></h1>
+        <p id="recipe-description" class="recipe-description"></p>
         <!-- Move recipe title here -->
       </div>
     </div>
@@ -71,9 +68,7 @@
 <div class="container">
   <!-- Author and Created Time -->
   <div class="row">
-    <div class="col-md-8">
-      <p id="recipe-info"></p>
-    </div>
+    <div class="col-md-8"></div>
     <div class="col-md-4">
       <button id="send_for_approval">Send For Approval</button>
     </div>
@@ -83,12 +78,12 @@
   <div class="row mt-2">
     <div class="col-md-8">
       <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold">
-        Description:
+        Ingredients:
       </h1>
     </div>
     <div class="col-md-4">
       <h1 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold">
-        Ingredients:
+        Steps:
       </h1>
     </div>
   </div>
@@ -122,10 +117,11 @@
               recipe.image.replace(/\\/g, "/").replace("/static", "");
             // Update HTML elements with recipe content
             $("#recipe-title").text(recipe.title);
+            $("#recipe-description").text(recipe.description);
+
             $("#recipe-info").text(
               "By " + recipe.author + " on " + recipe.created_at
             );
-            $("#recipe-description").text(recipe.description);
             $("#recipe-photo").attr("src", imagePath);
           }
         }

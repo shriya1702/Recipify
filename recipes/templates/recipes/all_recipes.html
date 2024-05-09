@@ -3,233 +3,211 @@
 
 {% block content %}
 
-
-
-
 <style>
-  
-  /* Custom CSS */
-  .special {
-    position: relative;
-    text-align: center;
-  }
-
-  .special img {
-    width: 100%;
-    height: auto;
-  }
-
-  .centered {
-    position: absolute;
-    top: 6%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  @media (max-width: 768px) {
-    .centered {
-      font-size: 1.25rem;
+    /* Custom CSS */
+    .special {
+        position: relative;
+        text-align: center;
     }
-  }
- 
-  
-.special__container :is(.section__header, .section__description) {
-  max-width: 600px;
-  margin-inline: auto;
-  
-}
 
-.special img {
-  width: 100%;
-  height: auto;
-  max-width: 400px; /* Adjust as needed */
-  margin-bottom: 20px;
-}
+    .special img {
+        width: 100%;
+        height: auto;
+    }
 
-.special__grid {
-  display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    justify-content: center;
-    padding: 0 20px;
-}
+    .centered {
+        position: absolute;
+        top: 6%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
 
-.special__card {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
-  padding: 20px;
-  text-align: center;
-  border: solid orange 1px;
-}
+    @media (max-width: 768px) {
+        .centered {
+            font-size: 1.25rem;
+        }
+    }
 
-.special__card:hover {
-  box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
-}
+    .special__container :is(.section__header, .section__description) {
+        max-width: 600px;
+        margin-inline: auto;
+    }
 
-.special__card img:hover{
-}
+    .special img {
+        width: 100%;
+        height: auto;
+        max-width: 500px; /* Adjust as needed */
+        margin-bottom: 20px;
+    }
 
-.special__card img {
-  height:40%;
-  border-radius:10%;
-  max-width: 300px;
-  margin-inline: auto;
-  margin-bottom: 1rem;
-  filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.3));
-}
+    .special__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        justify-content: center;
+        padding: 0 20px;
+    }
 
-.special__card h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-dark);
-}
+    .special__card {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        padding: 20px;
+        text-align: center;
+        border: solid orange 1px;
+        height: auto;
+    }
 
-.special__card p {
-  margin-bottom: 0.5rem;
-  color: var(--text-light);
-  line-height: 1.75rem;
-}
+    .special__card:hover {
+        box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
+    }
 
-.special__ratings {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  color: goldenrod;
-}
+    .special__card img {
+        height: 30%;
+        border-radius: 10%;
+        width: 100%;
+        margin-inline: auto;
+        margin-bottom: 1rem;
+        filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.3));
+    }
 
-.special__footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
+    .special__card h4 {
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
 
-.special__footer .price {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-.flex-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    .special__card p {
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+        line-height: 1.75rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+    }
 
-}
-.flex-container > div {
-  border: solid orange 1px;
-  color: orange;
-  width: 100%;
-  margin: 0px 0px 0px 10px;
-  text-align: center;
-  border-radius:6px;
-  padding: 6px 12px;
+    .special__ratings {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        color: goldenrod;
+    }
 
-}
+    .special__footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 
+    .special__footer .price {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-dark);
+    }
 
+    .flex-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-
+    .flex-container > div {
+        border: solid orange 1px;
+        color: orange;
+        width: 100%;
+        margin: 0px 0px 0px 10px;
+        text-align: center;
+        border-radius: 6px;
+        padding: 6px 12px;
+    }
 </style>
 
-
-
-
-
 <section class="section__container special__container mt-2" id="special">
-  <!-- Container for special cards -->
-  <div class="special__grid">
-    <!-- Special cards will be appended here -->
-  </div>
+    <!-- Container for special cards -->
+    <div class="special__grid">
+        <!-- Special cards will be appended here -->
+    </div>
 </section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-
 <script>
-function showImages(){
-  $.ajax({
-    url: "{% url 'show_all_recipe' %}",
-    method: "POST",
-    contentType: "application/json",
-    beforeSend: function(xhr, settings) {
-      xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-    },
-    data: JSON.stringify({
-      item: "recipe",
-    }),
-    success: function(response) {
-      for (const [key, value] of Object.entries(response)) {
-        for (var i in value) {
+    function showImages() {
+        $.ajax({
+            url: "{% url 'show_all_recipe' %}",
+            method: "POST",
+            contentType: "application/json",
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            data: JSON.stringify({
+                item: "recipe",
+            }),
+            success: function(response) {
 
-          var card = document.createElement('div');
-          card.className = "special__card";
+              alert("in");
+                for (const [key, value] of Object.entries(response)) {
+                    for (var i in value) {
+                        var card = document.createElement('div');
+                        card.className = "special__card";
 
-          // Create a link element for the card
-          var cardLink = document.createElement("a");
-          var redirectUrl = "{% url 'full_recipe' %}?id=" + value[i]["id"]; // Construct the URL
+                        // Create a link element for the card
+                        var cardLink = document.createElement("a");
+                        var redirectUrl = "{% url 'full_recipe' %}?id=" + value[i]["id"]; // Construct the URL
+                        alert(redirectUrl);
 
-          cardLink.setAttribute("href", redirectUrl);
-          cardLink.setAttribute("data-card-id", value[i]["id"]);
+                        cardLink.setAttribute("href", redirectUrl);
+                        cardLink.setAttribute("data-card-id", value[i]["id"]);
 
-          // Add event listener to the card link
-          cardLink.addEventListener("click", function(event) {
-            alert("hello");
-            event.preventDefault(); // Prevent default link behavior
-            var cardId = this.getAttribute("data-card-id");
-            alert(cardId); // Display card ID for testing
-            // Construct URL based on card ID and redirect
-            var redirectUrl = "{% url 'full_recipe' %}?id=" + cardId;
-            window.location.href = redirectUrl;
-          });
+                        // Add event listener to the card link
+                        cardLink.addEventListener("click", function(event) {
+                            event.preventDefault(); // Prevent default link behavior
+                            var cardId = this.getAttribute("data-card-id");
+                            alert(cardId); // Display card ID for testing
+                            // Construct URL based on card ID and redirect
+                            var redirectUrl = "{% url 'full_recipe' %}?id=" + cardId;
+                            window.location.href = redirectUrl;
+                        });
 
-          // Create image element for the card
-          var image = document.createElement('img');
-          var imagePath = "{% static '' %}" + value[i]["image"].replace(/\\/g, '/').replace('/static', '');
-          image.src = imagePath;
-          image.setAttribute('alt', value[i]["image"]);
+                        // Create image element for the card
+                        var image = document.createElement('img');
+                        var imagePath = "{% static '' %}" + value[i]["image"].replace(/\\/g, '/').replace('/static', '');
+                        image.src = imagePath;
+                        image.setAttribute('alt', value[i]["image"]);
 
-          // Create heading element for the card
-          var heading = document.createElement('h4');
-          heading.textContent = value[i]["title"];
+                        // Create heading element for the card
+                        var heading = document.createElement('h4');
+                        heading.textContent = value[i]["title"];
 
-          var desc=document.createElement('p');
-          desc.textContent= value[i]['description']
+                        var desc=document.createElement('p');
+                        desc.textContent= value[i]['description']
 
-          // Append elements to the card
-          card.appendChild(image);
-          card.appendChild(heading);
-          card.appendChild(desc);
-          {% comment %} cardLink.appendChild(card); {% endcomment %}
-          
-          card.appendChild(cardLink);
+                        // Append elements to the card
+                        card.appendChild(image);
+                        card.appendChild(heading);
+                        card.appendChild(desc);
+                        card.appendChild(cardLink); // Append the card link to the card
 
-          // Append the card to the container
-          document.querySelector('.special__grid').appendChild(card);
+                        // Append the card to the container
+                        document.querySelector('.special__grid').appendChild(card);
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            },
+        });
+    }
 
-
-
-         
-        }
-      }
-    },
-    error: function(xhr, status, error) {
-      console.error(xhr.responseText);
-    },
-  });
-}
-
-
-$(document).ready(function() {
-  showImages();
-});
-
-
-
-
+    $(document).ready(function() {
+        showImages();
+    });
 </script>
 {% endblock content %}

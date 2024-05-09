@@ -1,13 +1,146 @@
-{% extends 'recipes/base.html' %}
-{% block content %}
-{% load static %}
+{% extends 'recipes/nav.html' %} {% block content %} {% load static %}
 
-<div class="container" id="main">
-  
-  <div class="row" id="recipe-cards">
+<style>
+  .special {
+    position: relative;
+    text-align: center;
+  }
+
+  .special img {
+    width: 100%;
+    height: auto;
+  }
+
+  .centered {
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .centered {
+      font-size: 1.25rem;
+    }
+  }
+
+  .special__container :is(.section__header, .section__description) {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .special img {
+    width: 100%;
+    height: auto;
+    max-width: 500px; /* Adjust as needed */
+    margin-bottom: 20px;
+  }
+
+  .special__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  .special__card {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    padding: 20px;
+    text-align: center;
+    border: solid orange 1px;
+    height: auto;
+  }
+
+  .special__card:hover {
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .special__card img {
+    height: 300px;
+    border-radius: 10%;
+    width: 100%;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.3));
+  }
+
+  .special__card h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+  }
+
+  .special__card p {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+    line-height: 1.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+  }
+
+  .special__ratings {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: goldenrod;
+  }
+
+  .special__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .special__footer .price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flex-container > div {
+    border: solid orange 1px;
+    color: orange;
+    width: 100%;
+    margin: 0px 0px 0px 10px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+</style>
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+
+<section class="section__container special__container mt-2" id="special">
+  <div class="special__grid">
     <!-- Dynamic recipe cards will be added here -->
   </div>
-</div>
+</section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -17,42 +150,39 @@
       url: "{% url 'user_data' %}",
       method: "POST",
       contentType: "application/json",
-      beforeSend: function(xhr, settings) {
+      beforeSend: function (xhr, settings) {
         xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
       },
       data: JSON.stringify({
         item: "recipe",
       }),
-      success: function(response) {
+      success: function (response) {
         for (const [key, value] of Object.entries(response)) {
           for (var i in value) {
+            var cardContainer = document.createElement("div");
+            cardContainer.className = "ok";
+
+            var cardLink = document.createElement("a");
+            cardLink.setAttribute("data-card-id", value[i]["id"]);
+            cardLink.addEventListener("click", function (event) {
+              event.preventDefault();
+              var cardId = this.getAttribute("data-card-id");
+              var redirectUrl = "{% url 'full_recipe' %}?id=" + cardId;
+              window.location.href = redirectUrl;
+            });
+
             var card = document.createElement("div");
-            card.className = "col-md-3 mb-4";
+            card.className = " special__card"; // Added 'special__card' class
 
             // Create card content
-            var cardContent = document.createElement("div");
-            cardContent.className = "card";
 
-                        // Create anchor tag for linking
-                      // Create anchor tag for linking
-            var cardLink = document.createElement("a");
-            // Set custom data attribute to store card data
-            cardLink.setAttribute("data-card-id", value[i]["id"]); // Example: Assuming "id" is the specific data you want to send
-            // Add click event listener to handle card click
-            cardLink.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                var cardId = this.getAttribute("data-card-id");
-                alert(cardId);
-                // Construct URL based on card data
-                var redirectUrl = "{% url 'full_recipe' %}?id=" + cardId; // Example: Construct URL with card ID
-                window.location.href = redirectUrl; // Redirect to the constructed URL
-            });
-            
-
+            // Create anchor tag for linking
 
             // Create card image
             var cardImage = document.createElement("img");
-            var imagePath = "{% static '' %}" + value[i]["image"].replace(/\\/g, '/').replace('/static', '');
+            var imagePath =
+              "{% static '' %}" +
+              value[i]["image"].replace(/\\/g, "/").replace("/static", "");
             cardImage.src = imagePath;
             cardImage.className = "card-img-top";
             cardImage.alt = value[i]["image"];
@@ -62,48 +192,41 @@
             cardBody.className = "card-body";
 
             // Create card title
-            var cardTitle = document.createElement("h5");
+            var cardTitle = document.createElement("h4");
             cardTitle.className = "card-title";
             cardTitle.textContent = value[i]["title"];
 
-            // Append elements to card body and list group
+            // Create card description
+            var cardDesc = document.createElement("p");
+            cardDesc.textContent = value[i]["description"];
+
+            // Append elements to card body
             cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardDesc);
 
             // Append image and card body to card content
-            cardContent.appendChild(cardImage);
-            cardContent.appendChild(cardBody);
+            card.appendChild(cardImage);
+            card.appendChild(cardBody);
 
-            // Append card content to card element
-            cardLink.appendChild(cardContent);
-            card.appendChild(cardLink);
+            // Append card content to card link
+            cardLink.appendChild(card);
+            cardContainer.appendChild(cardLink);
+
+            // Append card link to card
 
             // Append card to recipe-cards container
-            document.getElementById("recipe-cards").appendChild(card);
+            document.querySelector(".special__grid").appendChild(cardContainer);
           }
         }
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         console.error(xhr.responseText);
       },
     });
   }
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     showImages();
   });
 </script>
 {% endblock content %}
-
-
-
-
-
-
-
-
-
-{% comment %} sendButton.addEventListener("DOMContentLoaded",function()){
-               const sendButton= document.getElementById('send_for_approval');
-               sendButton.addEventListener("click", function() {
-                 const url= "{% url 'send_for_approval' %}"
-               }); {% endcomment %}

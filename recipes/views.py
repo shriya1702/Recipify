@@ -182,9 +182,11 @@ def upload(request):
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             user = request.user
+            print(user)
     
               # Define the base directory for user uploads
             base_dir = os.path.join(settings.BASE_DIR, 'static', 'user_uploads')
+            print(base_dir)
 
             # Create a directory for the user if it doesn't exist
             user_dir = os.path.join(base_dir, str(user.username))
@@ -193,6 +195,7 @@ def upload(request):
 
             # Get the uploaded image from the form
             uploaded_image = form.cleaned_data['image']
+            print(uploaded_image)
 
             # Get the image name without the 'static/user_uploads/' prefix
             image_name = os.path.basename(uploaded_image.name)
